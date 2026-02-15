@@ -1,0 +1,343 @@
+{
+  "users": [
+    {
+      "id": "9c59",
+      "name": "test",
+      "email": "test@test.com",
+      "password": "111111"
+    },
+    {
+      "id": "8146",
+      "name": "aa",
+      "email": "aa@a.c",
+      "password": "111111"
+    },
+    {
+      "id": "a199",
+      "name": "deeplusindia",
+      "email": "Deeplusindia1@gmail.com",
+      "password": "111111"
+    },
+    {
+      "id": "baa3",
+      "name": "Faiz Ahmad",
+      "email": "faiz@gmail.com",
+      "password": "666666"
+    },
+    {
+      "id": "ca7d",
+      "name": "Tabish",
+      "email": "tabish@gmail.com",
+      "password": "111111"
+    }
+  ],
+  "groups": [
+    {
+      "id": "2272",
+      "name": "zainab",
+      "admin": "8146",
+      "members": [
+        "8146"
+      ],
+      "joinCode": "a0molg"
+    },
+    {
+      "id": "5196",
+      "name": "aa",
+      "admin": "8146",
+      "members": [
+        "8146"
+      ],
+      "joinCode": "5m4k1q"
+    },
+    {
+      "id": "afc9",
+      "name": "dd",
+      "admin": "8146",
+      "members": [
+        "8146"
+      ],
+      "joinCode": "lxwgbr"
+    },
+    {
+      "id": "3d33",
+      "name": "DeepPlus",
+      "admin": "a199",
+      "members": [],
+      "joinCode": "q1hly"
+    },
+    {
+      "id": "1954",
+      "name": "Just Check",
+      "admin": "a199",
+      "members": [
+        "a199",
+        "9c59"
+      ],
+      "joinCode": "mv7k9"
+    },
+    {
+      "id": "8a34",
+      "name": "aa",
+      "admin": "9c59",
+      "members": [
+        "9c59"
+      ],
+      "joinCode": "woznq"
+    },
+    {
+      "id": "ccfa",
+      "name": "jc",
+      "admin": "9c59",
+      "members": [
+        "9c59"
+      ],
+      "joinCode": "i2mv9"
+    },
+    {
+      "id": "449e",
+      "name": "new group",
+      "admin": "8146",
+      "members": [
+        "8146",
+        "9c59"
+      ],
+      "joinCode": "e8ctv"
+    },
+    {
+      "id": "389a",
+      "name": "Aunty Hostel",
+      "admin": "baa3",
+      "members": [
+        "baa3",
+        "ca7d"
+      ],
+      "joinCode": "648c6"
+    }
+  ],
+  "expenses": [
+    {
+      "id": "c43c",
+      "groupId": null,
+      "description": "tour",
+      "amount": 500,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "9c59"
+      ],
+      "createdAt": 1771188663458
+    },
+    {
+      "id": "8974",
+      "groupId": null,
+      "description": "5000",
+      "amount": null,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "9c59"
+      ],
+      "createdAt": 1771189113643
+    },
+    {
+      "id": "0d52",
+      "groupId": null,
+      "description": "1000",
+      "amount": null,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "9c59",
+        "8146"
+      ]
+    },
+    {
+      "id": "018d",
+      "groupId": "3d33",
+      "description": "party",
+      "amount": 10000,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "c575",
+      "groupId": "3d33",
+      "description": "birthday party",
+      "amount": 6000,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "ce69",
+      "groupId": "3d33",
+      "description": "day 1",
+      "amount": 2000,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "2b2f",
+      "groupId": "3d33",
+      "description": "test",
+      "amount": 1000,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "c3f2",
+      "groupId": null,
+      "description": "e",
+      "amount": 500,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "9c59",
+        "8146"
+      ]
+    },
+    {
+      "id": "3e09",
+      "groupId": null,
+      "description": "party",
+      "amount": 500,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199"
+      ]
+    },
+    {
+      "id": "f043",
+      "groupId": null,
+      "description": "extra",
+      "amount": 700,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199"
+      ]
+    },
+    {
+      "id": "9f2b",
+      "groupId": "3d33",
+      "description": "ch",
+      "amount": 5000,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "9044",
+      "groupId": "1954",
+      "description": "just check",
+      "amount": 5000,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "58ca",
+      "groupId": "1954",
+      "description": "jc",
+      "amount": 6000,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "6c3e",
+      "groupId": "1954",
+      "description": "hb",
+      "amount": 500,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "2b44",
+      "groupId": "1954",
+      "description": "desc",
+      "amount": 6000,
+      "paidBy": "a199",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "8349",
+      "groupId": "1954",
+      "description": "exp",
+      "amount": 1000,
+      "paidBy": "9c59",
+      "splitBetween": [
+        "a199",
+        "9c59"
+      ]
+    },
+    {
+      "id": "291a",
+      "groupId": "449e",
+      "description": "expense",
+      "amount": 5000,
+      "paidBy": "8146",
+      "splitBetween": [
+        "8146",
+        "9c59"
+      ]
+    },
+    {
+      "id": "aad6",
+      "groupId": "389a",
+      "description": "IceCream",
+      "amount": 120,
+      "paidBy": "baa3",
+      "splitBetween": [
+        "baa3",
+        "ca7d"
+      ]
+    },
+    {
+      "id": "6495",
+      "groupId": "389a",
+      "description": "Dinner",
+      "amount": 200,
+      "paidBy": "baa3",
+      "splitBetween": [
+        "baa3",
+        "ca7d"
+      ]
+    }
+  ],
+  "settlements": [
+    {
+      "id": "43f3",
+      "groupId": "3d33",
+      "from": "9c59",
+      "to": "a199",
+      "amount": 500
+    },
+    {
+      "id": "d6ff",
+      "groupId": "449e",
+      "from": "9c59",
+      "to": "8146",
+      "amount": 2500
+    }
+  ]
+}
