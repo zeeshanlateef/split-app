@@ -29,6 +29,12 @@
       "name": "Tabish",
       "email": "tabish@gmail.com",
       "password": "111111"
+    },
+    {
+      "id": "dfe5",
+      "name": "Anwar",
+      "email": "anwar@gmail.com",
+      "password": "111111"
     }
   ],
   "groups": [
@@ -113,6 +119,16 @@
         "ca7d"
       ],
       "joinCode": "648c6"
+    },
+    {
+      "id": "021b",
+      "name": "aws",
+      "admin": "dfe5",
+      "members": [
+        "dfe5",
+        "9c59"
+      ],
+      "joinCode": "i4co9"
     }
   ],
   "expenses": [
@@ -321,6 +337,17 @@
       "splitBetween": [
         "baa3",
         "ca7d"
+      ]
+    },
+    {
+      "id": "84c2",
+      "groupId": "021b",
+      "description": "nasta",
+      "amount": 100,
+      "paidBy": "dfe5",
+      "splitBetween": [
+        "dfe5",
+        "9c59"
       ]
     }
   ],

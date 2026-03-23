@@ -3,13 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://zeeshanlateef.github.io/split-app/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "server": "json-server --watch db.json --port 5000",
-    "start": "concurrently \"npm run dev\" \"npm run server\""
+    "backend": "node backend/index.js",
+    "dev-full": "concurrently \"npm run dev\" \"npm run backend\"",
+    "start": "node backend/index.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "axios": "^1.13.5",
@@ -33,7 +37,8 @@
     "concurrently": "^8.2.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.4",
-    "vite": "^8.0.0-beta.13"
+    "vite": "^8.0.0-beta.13",
+    "gh-pages": "^6.1.1"
   },
   "overrides": {
     "vite": "^8.0.0-beta.13"

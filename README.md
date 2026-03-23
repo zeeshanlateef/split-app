@@ -1,16 +1,50 @@
-# React + Vite
+# Split App - Full Stack Migration
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project has been migrated from a local `json-server` setup to a proper Full-Stack architecture using **Node.js/Express** and **MongoDB Atlas**.
 
-Currently, two official plugins are available:
+## Project Structure
+- `/` - Frontend (React + Vite)
+- `/backend` - Backend (Express + Mongoose)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Prerequisite: Setup MongoDB Atlas
+1. Create a free account on [MongoDB Atlas](https://www.mongodb.com/cloud/atlas).
+2. Create a new Cluster and a Database User.
+3. In **Network Access**, allow access from anywhere (`0.0.0.0/0`).
+4. Get your **Connection String** (e.g., `mongodb+srv://<username>:<password>@cluster0.mongodb.net/splitapp`).
 
-## React Compiler
+## Local Development
+1. Create a `.env` file in the root directory (or in `backend/`) with:
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   PORT=5000
+   ```
+2. Run the full stack:
+   ```bash
+   npm run dev-full
+   ```
+   This will start both the frontend (Vite) and the backend (Express).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Data Migration (Optional)
+If you want to move your existing data from `db.json` to MongoDB:
+1. Ensure your `.env` is set up.
+2. Run:
+   ```bash
+   node backend/migrate.js
+   ```
 
-## Expanding the ESLint configuration
+## Deployment Instructions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 1. Deploy the Backend (Recommended: Render)
+- Connect your GitHub repo to [Render](https://render.com/).
+- Create a new **Web Service**.
+- **Build Command**: `npm install`
+- **Start Command**: `npm start` (This runs `node backend/index.js`).
+- Add Environment Variable: `MONGODB_URI`.
+- Note down your backend URL (e.g., `https://split-app-backend.onrender.com`).
+
+### 2. Update Frontend on Vercel
+- Go to your Vercel Project Settings.
+- Add an Environment Variable:
+  - **Key**: `VITE_API_URL`
+  - **Value**: Your backend URL (from step 1).
+- Redeploy your frontend.
