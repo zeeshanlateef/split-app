@@ -1,56 +1,30 @@
 import mongoose from "mongoose";
+import User from "../backend/models/User.js";
+import Group from "../backend/models/Group.js";
+import Expense from "../backend/models/Expense.js";
+import Settlement from "../backend/models/Settlement.js";
 
 const MONGODB_URI = process.env.MONGODB_URI;
 
 let cachedConnection = null;
 
-const userSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
-}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
-
-const groupSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  admin: { type: String, required: true },
-  members: [String],
-  joinCode: { type: String, required: true, unique: true },
-}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
-
-const expenseSchema = new mongoose.Schema({
-  groupId: { type: String, default: null },
-  description: { type: String, required: true },
-  amount: { type: Number, required: true },
-  paidBy: { type: String, required: true },
-  splitBetween: [String],
-}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
-
-const settlementSchema = new mongoose.Schema({
-  groupId: { type: String, default: null },
-  from: { type: String, required: true },
-  to: { type: String, required: true },
-  amount: { type: Number, required: true },
-}, { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } });
-
-const getModels = async () => {
+const connectDB = async () => {
   if (cachedConnection && mongoose.connection.readyState === 1) {
-    return {
-      User: mongoose.models.User,
-      Group: mongoose.models.Group,
-      Expense: mongoose.models.Expense,
-      Settlement: mongoose.models.Settlement,
-    };
+    return cachedConnection;
   }
 
-  await mongoose.connect(MONGODB_URI);
-  cachedConnection = mongoose.connection;
+  if (!MONGODB_URI) {
+    throw new Error("MONGODB_URI is not defined. Please check your environment variables.");
+  }
 
-  const User = mongoose.models.User || mongoose.model("User", userSchema);
-  const Group = mongoose.models.Group || mongoose.model("Group", groupSchema);
-  const Expense = mongoose.models.Expense || mongoose.model("Expense", expenseSchema);
-  const Settlement = mongoose.models.Settlement || mongoose.model("Settlement", settlementSchema);
-
-  return { User, Group, Expense, Settlement };
+  try {
+    await mongoose.connect(MONGODB_URI);
+    cachedConnection = mongoose.connection;
+    return cachedConnection;
+  } catch (err) {
+    console.error("Mongoose connection error:", err);
+    throw err;
+  }
 };
 
 export default async function handler(req, res) {
@@ -61,26 +35,35 @@ export default async function handler(req, res) {
 
   if (req.method === "OPTIONS") return res.status(200).end();
 
-  let models;
   try {
-    models = await getModels();
+    await connectDB();
   } catch (err) {
-    console.error("DB connection error:", err);
-    return res.status(500).json({ message: "Database connection failed", error: err.message });
+    return res.status(500).json({ 
+      success: false, 
+      message: "Database connection failed", 
+      error: err.message 
+    });
   }
-
-  const { User, Group, Expense, Settlement } = models;
 
   // Extract path segments after /api/
   const url = req.url.replace(/\?.*$/, ""); // strip query string for routing
   const parts = url.replace(/^\/api/, "").replace(/^\//, "").split("/");
-  const resource = parts[0]; // users, groups, expenses, settlements
+  const resource = parts[0]; // status, users, groups, expenses, settlements
   const id = parts[1]; // optional id
 
   const query = req.query || {};
   const body = req.body || {};
 
   try {
+    // ===== SYSTEM STATUS =====
+    if (resource === "status") {
+      return res.json({ 
+        status: "online", 
+        db: mongoose.connection.readyState === 1 ? "connected" : "disconnected",
+        timestamp: new Date().toISOString()
+      });
+    }
+
     // ===== USERS =====
     if (resource === "users") {
       if (req.method === "GET") {
@@ -105,7 +88,9 @@ export default async function handler(req, res) {
         return res.json(groups);
       }
       if (req.method === "GET" && id) {
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "Invalid Group ID" });
         const group = await Group.findById(id);
+        if (!group) return res.status(404).json({ message: "Group not found" });
         return res.json(group);
       }
       if (req.method === "POST") {
@@ -114,10 +99,12 @@ export default async function handler(req, res) {
         return res.status(201).json(group);
       }
       if (req.method === "PUT" && id) {
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "Invalid Group ID" });
         const group = await Group.findByIdAndUpdate(id, body, { new: true });
         return res.json(group);
       }
       if (req.method === "DELETE" && id) {
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "Invalid Group ID" });
         await Group.findByIdAndDelete(id);
         return res.status(204).end();
       }
@@ -136,6 +123,7 @@ export default async function handler(req, res) {
         return res.status(201).json(expense);
       }
       if (req.method === "DELETE" && id) {
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(400).json({ message: "Invalid Expense ID" });
         await Expense.findByIdAndDelete(id);
         return res.status(204).end();
       }
@@ -155,9 +143,10 @@ export default async function handler(req, res) {
       }
     }
 
-    res.status(404).json({ message: "Route not found" });
+    res.status(404).json({ message: `Route /api/${resource} ${req.method} not found` });
   } catch (err) {
-    console.error("API error:", err);
+    console.error("API Error at /api/" + resource, err);
     res.status(500).json({ message: err.message });
   }
 }
+
